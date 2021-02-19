@@ -99,15 +99,15 @@ class CategoryController extends Controller
             'is_published' => 'required',
         ]);
 
-        $category->updated([
+        $category->update([
             'user_id' => Auth::id(),
             'name' => request('name'),
             'slug' => str_slug(request('name')),
             'thumbnail' => request('thumbnail'),
             'is_published' => request('is_published'),
         ]);
-        return dd($category);
-        // return redirect()->route('categories.index')->with('success', 'Category was updated');
+        // return dd($category);
+        return redirect()->route('categories.index')->with('success', 'Category was updated');
     }
 
     /**

@@ -32,9 +32,8 @@
                             <div class="form-group">
                                 <label for="is_published">Published</label>
                                 <select name="is_published" class="form-control">
-                                    <option disabled selected>Choose</option>
-                                    <option value="1">Published</option>
-                                    <option value="0">Draft</option>
+                                    <option value="1" {{ $category->is_published == '1' ? 'selected' : '' }}>Publish</option>
+                                    <option value="0" {{ $category->is_published == '0' ? 'selected' : '' }}>Draft</option>
                                 </select>
                                 @error('name')
                                     <div class="mt-2 text-danger">{{ $message }}</div>
