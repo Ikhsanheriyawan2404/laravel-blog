@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\{Post, Category};
-use Illuminate\Http\Request;
 
 class WebsiteController extends Controller
 {
