@@ -1,15 +1,14 @@
-@extends('website.template.master', ['title' => $title])
+@extends('website.template.master', compact('title'))
 
 @section('content')
     <!-- Page Header -->
-    <header class="masthead" style="background-image: url('{{ asset('blog/img/home-bg.jpg') }}')">
+    <header class="masthead" style="background-image: url({{ $category->thumbnail }})">
         <div class="overlay"></div>
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">
-                    <div class="site-heading">
-                        <h1>Clean Blog</h1>
-                        <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                    <div class="post-heading">
+                        <h1>{{ $category->name }}</h1>
                     </div>
                 </div>
             </div>
@@ -21,7 +20,7 @@
             <div class="col-lg-10 col-md-10 mx-auto">
                 @foreach ($posts as $post)
                     <div class="post-preview">
-                        <a href="{{ route('post', $post->slug) }}">
+                        <a href="{{ route('category', $category->slug) }}">
                             <h2 class="post-title">
                                 {{ $post->title }}
                             </h2>
@@ -48,16 +47,6 @@
                 <!-- Pager -->
                 <div class="clearfix mt-4">
                     {{ $posts->links() }}</a>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-6">
-                <div class="category">
-                    <h2 class="category-title">Category</h2>
-                    <ul class="category-list">
-                        @foreach ($categories as $category)
-                            <li><a href="{{ route('category', $category->slug) }}">{{ $category->name }}</a></li>
-                        @endforeach
-                    </ul>
                 </div>
             </div>
         </div>
