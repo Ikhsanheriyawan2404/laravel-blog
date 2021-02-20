@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
+use App\{Post, Category};
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -14,7 +15,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.posts.index', [
+            'no' => 1,
+            'title' => 'Post List',
+            'posts' => Post::latest()->paginate(10),
+        ]);
     }
 
     /**
@@ -24,7 +29,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create', [
+            'title' => 'Create new Post',
+            'categories' => Category::get(),
+        ]);
     }
 
     /**
@@ -33,9 +41,29 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        request()->validate([
+            'thumbnail' => 'required',
+            'title' => 'required|unique:posts,title,',
+            'details' => 'required',
+            'category' => 'required',
+        ]);
+
+        $post = Post::create([
+            'user_id' => Auth::id(),
+            'thumbnail' => request('thumbnail'),
+            'title' => request('title'),
+            'slug' => str_slug(request('title')),
+            'sub_title' => request('sub_title'),
+            'details' => request('details'),
+            'is_published' => request('is_published'),
+            'post_type' => 'post',
+        ]);
+
+        $post->categories()->sync(request('category'));
+
+        return redirect()->route('posts.index')->with('success', 'New Post was created');
     }
 
     /**
@@ -57,7 +85,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', [
+            'title' => 'Edit Post',
+            'categories' => Category::get(),
+            'post' => $post,
+        ]);
     }
 
     /**
@@ -80,6 +112,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return back()->with('success', 'Post was delete');
     }
 }

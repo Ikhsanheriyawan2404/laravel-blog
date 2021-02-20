@@ -47,6 +47,7 @@
             text-decoration: none;
         }
     </style>
+    @yield('custom-styles')
 
 </head>
 
@@ -85,7 +86,7 @@
 
     <!-- Custom scripts for this template -->
     <script src="{{ asset('blog/js/clean-blog.min.js') }}"></script>
-
+    @yield('custom-scripts')
 </body>
 
 </html>
