@@ -18,6 +18,7 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Title</th>
+                                    <th>Category</th>
                                     <th>Author</th>
                                     <th><i class="fas fa-cogs"></i></th>
                                 </tr>
@@ -27,6 +28,7 @@
                                     <tr>
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $post->title }}</td>
+                                        <td>{{ $post->categories()->get()->implode('name', ',') }}</td>
                                         <td>{{ $post->user->name }}</td>
                                         <td>
                                             <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>

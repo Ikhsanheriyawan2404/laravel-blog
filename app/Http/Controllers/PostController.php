@@ -99,9 +99,28 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Post $post)
     {
-        //
+        request()->validate([
+            'thumbnail' => 'required',
+            'title' => 'required|unique:posts,title,' . $post->id,
+            'details' => 'required',
+            'category' => 'required',
+        ]);
+
+        $post->update([
+            'user_id' => Auth::id(),
+            'thumbnail' => request('thumbnail'),
+            'title' => request('title'),
+            'slug' => str_slug(request('title')),
+            'sub_title' => request('sub_title'),
+            'details' => request('details'),
+            'is_published' => request('is_published'),
+            'post_type' => 'post',
+        ]);
+
+        $post->categories()->sync(request('category'));
+        return redirect()->route('posts.index')->with('success', 'Post was updated');
     }
 
     /**

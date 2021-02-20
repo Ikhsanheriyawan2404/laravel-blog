@@ -24,21 +24,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input type="text" name="title" class="form-control" value="{{ old('thumbnail') ?? $post->thumbnail }}">
+                                <input type="text" name="title" class="form-control" value="{{ old('title') ?? $post->title }}">
                                 @error('title')
                                     <div class="mt-2 text-danger">{{ $message }}</div>
                                 @enderror()
                             </div>
                             <div class="form-group">
                                 <label for="sub_title">Sub Title</label>
-                                <input type="text" name="sub_title" class="form-control" value="{{ old('thumbnail') ?? $post->thumbnail }}">
+                                <input type="text" name="sub_title" class="form-control" value="{{ old('sub_title') ?? $post->sub_title }}">
                                 @error('sub_title')
                                     <div class="mt-2 text-danger">{{ $message }}</div>
                                 @enderror()
                             </div>
                             <div class="form-group">
                                 <label for="details">Details</label>
-                                <textarea name="details" class="form-control" value="{{ old('thumbnail') ?? $post->thumbnail }}"></textarea>
+                                <textarea name="details" id="details" class="form-control">{{ old('details') ?? $post->details }}</textarea>
                                 @error('details')
                                     <div class="mt-2 text-danger">{{ $message }}</div>
                                 @enderror()
@@ -50,7 +50,7 @@
                                         <option value="{{ $category->id }}" {{ $post->categories()->find($category->id) ? 'selected' : '' }}>{{ $category->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('category_id')
+                                @error('category')
                                     <div class="mt-2 text-danger">{{ $message }}</div>
                                 @enderror()
                             </div>
@@ -64,7 +64,7 @@
                                     <div class="mt-2 text-danger">{{ $message }}</div>
                                 @enderror()
                             </div>
-                            <button type="submit" class="btn btn-primary float-right">Save</button>
+                            <button type="submit" class="btn btn-primary float-right">Update</button>
                         </form>
                     </div>
                 </div>
